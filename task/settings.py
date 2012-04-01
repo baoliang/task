@@ -1,4 +1,3 @@
-# _*_ coding: utf-8 _*_
 # Django settings for task project.
 
 DEBUG = True
@@ -12,12 +11,12 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'task',                      # Or path to database file if using sqlite3.
-        'USER': 'root',                      # Not used with sqlite3.
-        'PASSWORD': 'wwwsunboy',                  # Not used with sqlite3.
-        'HOST': '127.0.0.1',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '3306',                      # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': '',                      # Or path to database file if using sqlite3.
+        'USER': '',                      # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
 
@@ -28,7 +27,7 @@ DATABASES = {
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
-TIME_ZONE = 'Asia/Shanghai'
+TIME_ZONE = 'America/Chicago'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
@@ -120,12 +119,12 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
-     'django.contrib.admin',
-     'djcelery',
-     'task',
+    # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-)# A sample logging configuration. The only tangible logging
+)
+
+# A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
 # the site admins on every HTTP 500 error when DEBUG=False.
 # See http://docs.djangoproject.com/en/dev/topics/logging for
@@ -153,57 +152,3 @@ LOGGING = {
         },
     }
 }
-BROKER_HOST = "localhost"
-BROKER_PORT = 6379
-BROKER_BACKEND="redis"
-
-REDIS_HOST = "localhost"
-BROKER_USER = ""
-BROKER_PASSWORD =""
-BROKER_VHOST = "0"
-REDIS_DB = 0
-REDIS_CONNECT_RETRY = True
-CELERY_SEND_EVENTS=True
-CELERY_RESULT_BACKEND='redis'
-CELERY_TASK_RESULT_EXPIRES =  10
-CELERYBEAT_SCHEDULER="djcelery.schedulers.DatabaseScheduler"
-CELERY_ALWAYS_EAGER=True
-import djcelery
-djcelery.setup_loader()
-
-
-MONGO_HOST = '127.0.0.1'
-MONGO_PORT = 27017
-DB_NAME = "xia"
-PAGE_LIMIT = 10
-DEFAULT_LIMIT = 10
-DEBUG = True
-#状态码
-ST_CODE = {
-    'norm': 0,
-    'del': 1,
-    'v': 2,
-}
-# one or more directories
-MAKO_DIR = 'templates'
-# optional, if specified Mako will cache to this directory
-MAKO_CACHEDIR = '/tmp/mako'
-# optional, if specified Mako will respect the cache size
-MAKO_CACHESIZE = 500
-CONTENT_TYPE_LIST = [
-    "audio/midi",                     
-    "audio/mpeg",                      
-    "audio/ogg",                       
-    "audio/x-m4a",                     
-    "audio/x-realaudio",               
-    "video/3gpp",                      
-    "video/mp4",                       
-    "video/mpeg",                      
-    "video/quicktime",                 
-    "video/webm",                      
-    "video/x-m4v",                     
-    "video/x-mng",                     
-    "video/x-ms-asf",                  
-    "video/x-ms-wmv",                      
-    "video/x-msvideo",                     
-]

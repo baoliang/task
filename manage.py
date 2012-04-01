@@ -1,13 +1,10 @@
 #!/usr/bin/env python
-from __future__ import absolute_import
-from flask.ext.script import Manager
-from flask.ext.celery import install_commands as install_celery_commands
-
-from myapp import create_app
-
-app = create_app()
-manager = Manager(app)
-install_celery_commands(manager)
+import os
+import sys
 
 if __name__ == "__main__":
-    manager.run()
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings_run")
+
+    from django.core.management import execute_from_command_line
+
+    execute_from_command_line(sys.argv)
