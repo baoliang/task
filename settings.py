@@ -23,7 +23,7 @@ DATABASES = {
 
 TIME_ZONE = 'Asia/Shanghai'
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-cn'
 SITE_ID = 1
 USE_I18N = True
 USE_L10N = True
@@ -141,3 +141,4 @@ CONTENT_TYPE_LIST = [
     "video/x-ms-wmv",                      
     "video/x-msvideo",                     
 ]
+PLAY_LIST_TYPE = ["Audio", "Video", "VideoRecording", "AudioRecording"]

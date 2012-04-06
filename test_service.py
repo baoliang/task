@@ -1,28 +1,53 @@
 # _*_ coding: utf-8 _*_
-from lib.store import insert, find, find_one, remove, add_file
+from lib.store import insert, update, find, find_one, remove, add_file
 from service.task import get_not_conver_file
-from service.task import convert_task
+from service.task import convert_media
 from service.task import remove_tmp_file
+from service.task import update_task_data_media
 import unittest
 import os
 
 class Test_account(unittest.TestCase):    
     _id = ""
+    task_id = ""
+    file_id =""
     def setUp(self):
         remove_tmp_file() 
         self._id = str(add_file(open("./tmp.mov").read(), 
             content_type="video/quicktime",
-            filename="tmp.mov"
+            filename="tmp.mov", 
+            
         ))
-    def tearDown(self):
-        remove("fs.file", self._id, real=True)		 
+        
+        update("fs.files",{"_id": self._id}, {"uuid": "1000"})
+        print "update file" 
+        print find_one("fs.files", {"uuid": "1000"})
+        self.task_id = insert("TaskData", {
+          "entryList":[{
+            "fieldType":"Video", "uuid": "1000"
+              }]
+          })
+       
 
+    def tearDown(self):
+        remove("fs.file", {"_id": self._id}, real=True)
+        remove('TaskData', {"_id": self.task_id}, real=True)
     def test_get_not_conver_file(self):
         self.assertTrue(get_not_conver_file() > 0) 
     
-    def test_convert_task(self):
-        result = convert_task()
-        self.assertTrue(result)
 
+    def test_convert_media(self):
+        result = convert_media()
+        self.assertTrue(result)
+        update_task_data_media()
+        result = find_one("TaskData", {
+            "_id": self.task_id
+         } )
+        print 'result'
+        print result
+        print find_one("fs.files", {"uuid": "1000"})
+        self.assertTrue(result.get("converd", False))
+        self.assertTrue(result.get("entryList")[0].get("converd_id", False))
+            
 if __name__ == '__main__':
     unittest.main()
