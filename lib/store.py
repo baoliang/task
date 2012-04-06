@@ -5,6 +5,8 @@ import datetime
 import settings_run
 
 def update(collection, query, data_dic):
+    if query.has_key("_id"):
+        query["_id"] = ObjectId(str(query["_id"]))
     db_update[collection].update(query, {'$set': data_dic}, safe=True )
    
 def insert(collection, data, st_code=settings_run.ST_CODE['norm']):
@@ -30,8 +32,6 @@ def remove(collection, query={}, real=False):
 def find(collection, query={}, limit=0, sort=-1, return_type="list"):
     #query.update({'st_code': settings_run.ST_CODE['norm']})
     result = db[collection].find(query).sort('create_time', sort).limit(limit)
-    if settings_run.DEBUG:
-        print query
     if return_type == "cusor":
         return result
     else:
@@ -39,10 +39,6 @@ def find(collection, query={}, limit=0, sort=-1, return_type="list"):
 
 def find_one(collection, query={}):
     if query.has_key('_id')  and collection not in ['users', 'city', 'cach']:
-        print 'find_one'
-        print query
-        if query.get("_id") == "":
-            return None
         query.update({'_id': ObjectId(query.get('_id'))})
     return db[collection].find_one(query)
     

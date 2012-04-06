@@ -19,12 +19,10 @@ class Test_account(unittest.TestCase):
             
         ))
         
-        update("fs.files",{"_id": self._id}, {"uuid": "1000"})
-        print "update file" 
-        print find_one("fs.files", {"uuid": "1000"})
+        update("fs.files",{"_id": self._id}, {"uuid": self._id})
         self.task_id = insert("TaskData", {
           "entryList":[{
-            "fieldType":"Video", "uuid": "1000"
+            "fieldType":"Video", "uuid": self._id
               }]
           })
        
@@ -43,11 +41,10 @@ class Test_account(unittest.TestCase):
         result = find_one("TaskData", {
             "_id": self.task_id
          } )
-        print 'result'
+        print "result"
         print result
-        print find_one("fs.files", {"uuid": "1000"})
         self.assertTrue(result.get("converd", False))
-        self.assertTrue(result.get("entryList")[0].get("converd_id", False))
+        self.assertTrue(result.get("entryList")[0].get("converdid", False))
             
 if __name__ == '__main__':
     unittest.main()
