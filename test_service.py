@@ -21,8 +21,9 @@ class Test_account(unittest.TestCase):
         
         update("fs.files",{"_id": self._id}, {"uuid": self._id})
         self.task_id = insert("TaskData", {
+          "converd": False,
           "entryList":[{
-            "fieldType":"Video", "uuid": self._id
+            "fieldType":"Video", "uuid": self._id, "converdid": "",
               }]
           })
        

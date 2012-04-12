@@ -122,7 +122,7 @@ def update_one_task_data(data):
 def update_task_data_media():
     try:
         qeue = find("TaskData", {
-            "converd": {"$exists": False}
+            "converd": False
         })
         for data in qeue:
             print "update_task"
