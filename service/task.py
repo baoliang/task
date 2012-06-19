@@ -3,10 +3,12 @@
 @todo: 转码任务逻辑
 """
 
-from lib.store import find, update, get_file_by_id, add_file, find_one
+from lib.store import find, update, get_file_by_id, add_file, find_one, insert
 from settings_run import CONTENT_TYPE_LIST
 from settings_run import PLAY_LIST_TYPE
+from models.company import Company
 import os
+from scn import new_scn
 
 def get_not_conver_file():
     """
@@ -170,4 +172,23 @@ def update_task_data_media():
     })
     for data in qeue:
         update_one_task_data(data) 
-                
+          
+def insert_scn(new_scn, company):
+    new_scn["corpSeq"] = company.corp_seq
+    new_scn["checkedScenario"] = False
+    if new_scn.has_key("_id"):
+        new_scn.pop("_id")
+    insert("Scenario", new_scn)
+
+
+
+def add_new_template():
+    "todo: 添加新方案"
+    company_list = Company.objects.filter()
+    zero_company = Company()
+    zero_company.corp_seq = 0
+    insert_scn(new_scn, zero_company)    
+    for company in company_list:        
+        insert_scn(new_scn, company)
+
+  
