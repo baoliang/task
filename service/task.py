@@ -11,6 +11,7 @@ import os
 from scn import new_scn
 import subprocess 
 from subprocess import Popen, PIPE, STDOUT
+import re
 
 def get_not_conver_file():
     """
