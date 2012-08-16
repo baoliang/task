@@ -9,6 +9,7 @@ from settings_run import PLAY_LIST_TYPE
 from models.company import Company
 import os
 from scn import new_scn
+import subprocess 
 
 def get_not_conver_file():
     """
