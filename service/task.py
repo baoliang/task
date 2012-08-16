@@ -10,6 +10,7 @@ from models.company import Company
 import os
 from scn import new_scn
 import subprocess 
+from subprocess import Popen, PIPE, STDOUT
 
 def get_not_conver_file():
     """
