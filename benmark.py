@@ -71,3 +71,11 @@ def test_task_user_find():
     print result
     print result.count()
 
+def test_insert():
+    print now()
+    for i in range(1000000):
+        insert("test", 
+            {"test":1, "test2": "222xxxx", "test3":"kaonima", "test4": "qusiba"},
+            safe=False
+            )
+    print now()

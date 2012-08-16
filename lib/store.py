@@ -9,10 +9,10 @@ def update(collection, query, data_dic):
         query["_id"] = ObjectId(str(query["_id"]))
     db_update[collection].update(query, {'$set': data_dic}, safe=True )
    
-def insert(collection, data, st_code=settings_run.ST_CODE['norm']):
+def insert(collection, data, st_code=settings_run.ST_CODE['norm'], safe=True):
     data.update({'create_time': str(datetime.datetime.now())})
     data.update({'st_code': st_code})
-    return db_update[collection].insert(data, safe=True)
+    return db_update[collection].insert(data, safe=safe)
     
 def remove(collection, query={}, real=False):
     if real:

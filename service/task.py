@@ -190,5 +190,13 @@ def add_new_template():
     insert_scn(new_scn, zero_company)    
     for company in company_list:        
         insert_scn(new_scn, company)
+        
+def ex_java(cmd):    
+    proc = subprocess.Popen(cmd,stdout=PIPE,stderr=STDOUT)
+    input=subprocess.Popen(cmd,stdin=PIPE)
+    result = proc.stdout.read()
+    if re.match(r"Exception", result):
+        return [False, result]
+    return [True, result]
 
   

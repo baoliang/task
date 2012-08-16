@@ -74,3 +74,6 @@ def encrypt_password(password, salt=None):
         result = HMAC(result, salt, sha256).digest()
     
     return salt + result
+    
+def execute_java(java_file):
+    java_class,ext = os.path.splitext(java_file)
