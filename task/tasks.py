@@ -17,7 +17,7 @@ def update_task():
     
 @task
 def test_java_task():
-    result = ex_java(['java', "TimerTask"])
+    result = ex_java(['java', "-jar sync-task-data/sync-task-data.jar"])
     if  not result[0]:
         raise NameError(result[1])
     else:
