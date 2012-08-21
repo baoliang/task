@@ -196,9 +196,9 @@ def add_new_template():
         
 def ex_java(cmd):    
     proc = subprocess.Popen(cmd,stdout=PIPE,stderr=STDOUT)
-    input=subprocess.Popen(cmd,stdin=PIPE)
+    input = subprocess.Popen(cmd,stdin=PIPE)
     result = proc.stdout.read()
-    if re.match(r"Exception", result):
+    if result.find("Exception") != 0:
         return [False, result]
     return [True, result]
 
