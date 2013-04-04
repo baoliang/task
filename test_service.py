@@ -36,14 +36,18 @@ class Test_account(unittest.TestCase):
     
 
     def test_convert_media(self):
-        result = convert_media()
+        try: 
+          result = convert_media()
+        except:
+          from lib.utils import print_err
+          print_err()
+        print "convert "
+        print result
         self.assertTrue(result)
         update_task_data_media()
         result = find_one("TaskData", {
             "_id": self.task_id
          } )
-        print "result"
-        print result
         self.assertTrue(result.get("converd", False))
         self.assertTrue(result.get("entryList")[0].get("converdid", False))
             

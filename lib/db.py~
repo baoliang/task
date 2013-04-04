@@ -8,23 +8,21 @@ MG_READ_PORT = settings.MONGO_PORT
 MG_NAME = settings.DB_NAME
 
 def get_db_update():
-    _db = pymongo.Connection(MG_HOST, MG_PORT)
-    _db = _db[MG_NAME]
-    _db.authenticate("xia","c2vm.c0m")
+    _db = pymongo.Connection(MG_HOST, MG_PORT)[MG_NAME]
     return _db
 
 
 def get_db_read():
-    _db = pymongo.Connection(MG_HOST, MG_PORT)
-    _db = _db[MG_NAME]
-    _db.authenticate("xia","c2vm.c0m")
+    _db = pymongo.Connection(MG_READ_HOST, MG_READ_PORT)[MG_NAME]
+    
     return _db
+    
+    
+def get_gridfs():
+    return gridfs.GridFS(get_db_update())
+    
+
 db_update = get_db_update()
 db = get_db_read()
-
-
-def get_gridfs():
-    return gridfs.GridFS(db_update)
-    
 
 

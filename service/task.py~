@@ -6,6 +6,7 @@
 from lib.store import find, update, get_file_by_id, add_file, find_one, insert
 from settings_run import CONTENT_TYPE_LIST
 from settings_run import PLAY_LIST_TYPE
+from models.company import Company
 import os
 from scn import new_scn
 import subprocess 
@@ -16,8 +17,14 @@ def get_not_conver_file():
     """
     @todo: 取得所有没有转码的文件
     """
-    file_queue  =  find("fs.files",{ "contentType": {"$in": CONTENT_TYPE_LIST },'converdid': {'$exists': False}})
-    print file_queue
+    file_queue = find("fs.files",
+        {
+          "$and": [{ "contentType": {
+              "$in": CONTENT_TYPE_LIST  
+              }},
+              {'converdid': {'$exists': False}}]
+         }
+      )
     return file_queue 
 
 def remove_tmp_file():
@@ -34,7 +41,6 @@ def convert_file_2_flv(_id):
     """
     file_obj = get_file_by_id(_id) 
     open("/tmp/tmp", "w").write(file_obj.get("content"))
-    print "------------------king is king "
     os.system("ffmpeg -i /tmp/tmp -y -ab 56\
                   -ar 22050 -b 500 -qscale 1  -s  320*240 /tmp/tmp.flv"
               )
@@ -79,8 +85,6 @@ def convert_media():
     @todo: 转码所有未转码的文件
     """
     qeue = get_not_conver_file()  
-    print "the quee is "
-    print qeue
     for item in qeue:
         source_id = item.get("_id")
         update_file_converd(source_id, 
@@ -180,5 +184,22 @@ def insert_scn(new_scn, company):
     insert("Scenario", new_scn)
 
 
+
+def add_new_template():
+    "todo: 添加新方案"
+    company_list = Company.objects.filter()
+    zero_company = Company()
+    zero_company.corp_seq = 0
+    insert_scn(new_scn, zero_company)    
+    for company in company_list:        
+        insert_scn(new_scn, company)
+        
+def ex_java(cmd):    
+    proc = subprocess.Popen(cmd,stdout=PIPE,stderr=STDOUT)
+    input = subprocess.Popen(cmd,stdin=PIPE)
+    result = proc.stdout.read()
+    if result.find("Exception") != 0:
+        return [False, result]
+    return [True, result]
 
   

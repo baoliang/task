@@ -1,22 +1,23 @@
 from lib.db import db_update, db, get_gridfs
+
 import pymongo
-from pymongo.objectid import ObjectId
+from bson.objectid import ObjectId
 import datetime
 import settings_run
 
 def update(collection, query, data_dic):
     if query.has_key("_id"):
         query["_id"] = ObjectId(str(query["_id"]))
-    db_update[collection].update(query, {'$set': data_dic}, safe=True )
+    db_update[collection].update(query, {'$set': data_dic} )
    
-def insert(collection, data, st_code=settings_run.ST_CODE['norm'], safe=True):
+def insert(collection, data, st_code=settings_run.ST_CODE['norm']):
     data.update({'create_time': str(datetime.datetime.now())})
     data.update({'st_code': st_code})
-    return db_update[collection].insert(data, safe=safe)
+    return db_update[collection].insert(data)
     
 def remove(collection, query={}, real=False):
     if real:
-        db_update[collection].remove(query, safe=True)
+        db_update[collection].remove(query)
     else:
         db_update[collection].update(
             query, 
